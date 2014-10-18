@@ -25,14 +25,12 @@ namespace MvvmWcfCrudList.Service.Entity
 
         [DataMember]
         [ProtoMember(1)]
-        public Guid Id
+        public string Id
         {
-            get { return _Id; }
+            get { return _Id.ToString(); }
             set {
-                if (!_Id.Equals(value))
-                {
-                    _Id = value;
-                }
+                _Id = Guid.NewGuid();
+                bool isUpdated = Guid.TryParse(value, out _Id);
             }
         }
 

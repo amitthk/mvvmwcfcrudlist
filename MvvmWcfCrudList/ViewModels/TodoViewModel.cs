@@ -32,7 +32,7 @@ namespace MvvmWcfCrudList.ViewModels
             //This goes in Initialization/constructor
             GoBackCmd = new RelayCommand(ExecGoBack, CanGoBack);
             _SaveTodoCmd = new RelayCommand(ExecSaveTodo, CanSaveTodo);
-            _todoServiceClient = new TodoServiceClient("NetNamedPipeBinding_ITodoService");
+            _todoServiceClient = BootStrapper.Instance.todoServiceClient;
         }
 
 
@@ -52,10 +52,10 @@ namespace MvvmWcfCrudList.ViewModels
 
         public Guid Id
         {
-            get { return _todo.Id; }
+            get { return Guid.Parse(_todo.Id); }
             set
             {
-                _todo.Id = value;
+                _todo.Id = value.ToString();
                 OnPropertyChanged("Id");
             }
         }

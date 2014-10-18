@@ -80,7 +80,7 @@ namespace MvvmWcfCrudList.ViewModels
 
         public HomeViewModel()
         {
-            _todoServiceClient = new TodoServiceClient("NetNamedPipeBinding_ITodoService");
+            _todoServiceClient = BootStrapper.Instance.todoServiceClient;
             _eventAggregator = App.eventAggregator;
             TodoList = new ObservableCollection<TodoViewModel>();
 

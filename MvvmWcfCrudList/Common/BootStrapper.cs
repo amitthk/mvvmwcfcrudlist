@@ -12,6 +12,10 @@ namespace MvvmWcfCrudList.Common
     class BootStrapper
     {
         private static BootStrapper _instance;
+        private static ServiceHost _host;
+
+        private static TodoServiceClient _todoServiceClient;
+
         public static BootStrapper Instance
         {
             get
@@ -24,6 +28,8 @@ namespace MvvmWcfCrudList.Common
             }
         }
 
+        public TodoServiceClient todoServiceClient { get { return (_todoServiceClient); } }
+
         private BootStrapper()
         {
             _host = new ServiceHost(typeof(TodoService), new Uri("net.pipe://localhost"));
@@ -33,7 +39,6 @@ namespace MvvmWcfCrudList.Common
            // _host = new ServiceHost(typeof(MvvmWcfCrudList.Service.TodoService));                        
         }
 
-        private static ServiceHost _host;
 
         public void Bootstrap(App app, System.Windows.StartupEventArgs e)
         {
@@ -43,7 +48,7 @@ namespace MvvmWcfCrudList.Common
             //_host.Description.Behaviors.Add(smb);
 
 
-
+            //Start server in new thread
             try
             {
                 System.Threading.ThreadPool.QueueUserWorkItem(state =>
@@ -56,6 +61,10 @@ namespace MvvmWcfCrudList.Common
                 _host.Abort();
                 throw (exc);
             }
+
+            //Start client
+            _todoServiceClient = new TodoServiceClient("NetNamedPipeBinding_ITodoService");
+
         }
 
         public void ShutDown(App app, System.Windows.ExitEventArgs e)

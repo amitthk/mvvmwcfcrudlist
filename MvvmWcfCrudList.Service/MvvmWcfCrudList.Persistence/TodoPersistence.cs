@@ -19,7 +19,7 @@ namespace MvvmWcfCrudList.Service.MvvmWcfCrudList.Persistence
         public Guid Add(Entity.Todo todo)
         {
             var filename = _protobufDb.Write<Todo>(todo, todo.Id.ToString());
-            return (todo.Id);
+            return (Guid.Parse(todo.Id));
         }
 
         public void Delete(Guid id)
