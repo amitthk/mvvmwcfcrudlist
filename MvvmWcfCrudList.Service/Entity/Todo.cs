@@ -29,8 +29,9 @@ namespace MvvmWcfCrudList.Service.Entity
         {
             get { return _Id.ToString(); }
             set {
-                _Id = Guid.NewGuid();
-                bool isUpdated = Guid.TryParse(value, out _Id);
+                if(!(Guid.TryParse(value, out _Id))){
+                    _Id = Guid.NewGuid();
+                }
             }
         }
 

@@ -69,6 +69,18 @@ namespace MvvmWcfCrudList.Common
 
         public void ShutDown(App app, System.Windows.ExitEventArgs e)
         {
+            //Lets close the client first
+            try
+            {
+                _todoServiceClient.Close();
+            }
+            catch (Exception exc1)
+            {
+                _todoServiceClient.Abort();
+                throw(exc1);
+            }
+
+            //Close the server now
             try
             {
                 _host.Close();
